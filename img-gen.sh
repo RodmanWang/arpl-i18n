@@ -10,28 +10,28 @@ if [ ! -d .buildroot ]; then
 fi
 
 # Convert po2mo, Get extractor, LKM, addons and Modules
-convertpo2mo "files/board/arpl/overlayfs/opt/arpl/lang"
-getExtractor "files/board/arpl/p3/extractor"
-getLKMs "files/board/arpl/p3/lkms" true
-getAddons "files/board/arpl/p3/addons" true
-getModules "files/board/arpl/p3/modules" true
+convertpo2mo "files/board/rr/overlayfs/opt/rr/lang"
+getExtractor "files/board/rr/p3/extractor"
+getLKMs "files/board/rr/p3/lkms" true
+getAddons "files/board/rr/p3/addons" true
+getModules "files/board/rr/p3/modules" true
 
 # Remove old files
-rm -rf ".buildroot/output/target/opt/arpl"
-rm -rf ".buildroot/board/arpl/overlayfs"
-rm -rf ".buildroot/board/arpl/p1"
-rm -rf ".buildroot/board/arpl/p3"
+rm -rf ".buildroot/output/target/opt/rr"
+rm -rf ".buildroot/board/rr/overlayfs"
+rm -rf ".buildroot/board/rr/p1"
+rm -rf ".buildroot/board/rr/p3"
 
 # Copy files
 echo "Copying files"
 VERSION=$(cat VERSION)
-sed 's/^ARPL_VERSION=.*/ARPL_VERSION="'${VERSION}'"/' -i files/board/arpl/overlayfs/opt/arpl/include/consts.sh
-echo "${VERSION}" >files/board/arpl/p1/ARPL-VERSION
+sed 's/^RR_VERSION=.*/RR_VERSION="'${VERSION}'"/' -i files/board/rr/overlayfs/opt/rr/include/consts.sh
+echo "${VERSION}" >files/board/rr/p1/RR_VERSION
 cp -Ru files/* .buildroot/
 
 cd .buildroot
 echo "Generating default config"
-make BR2_EXTERNAL=./external -j$(nproc) arpl_defconfig
+make BR2_EXTERNAL=./external -j$(nproc) rr_defconfig
 echo "Version: ${VERSION}"
 echo "Building... Drink a coffee and wait!"
 make BR2_EXTERNAL=./external -j$(nproc)
